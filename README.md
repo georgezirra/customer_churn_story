@@ -3,7 +3,7 @@
 This project tells the story of customer churn using data science, wrapped in an interactive and human-friendly web page.  
 It demonstrates how data can be turned into actionable business insights — from churn prediction to retention strategies.  
 
-🌍 **Live Demo**: [View on GitHub Pages](https://your-username.github.io/customer-churn-story/)  
+🌍 **Live Demo**: [View on GitHub Pages](https://georgezirra.github.io/customer_churn_story/)  
 
 ---
 
