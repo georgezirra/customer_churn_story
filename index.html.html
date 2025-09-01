@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Customer Churn — Data Story</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Simple fade-in animation used for sections */
+    .fade-in { opacity: 0; transform: translateY(10px); transition: opacity 600ms ease, transform 600ms ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    /* Simple sticky nav shadow handling */
+    .nav-shadow { box-shadow: 0 4px 12px rgba(16,24,40,0.06); }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased" id="home">
+<nav id="topnav" class="bg-white sticky top-0 z-40 nav-shadow">
+  <div class="container mx-auto px-4 py-3 flex items-center justify-between relative">
+    <!-- Logo -->
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-500 flex items-center justify-center text-white font-bold">CC</div>
+      <div>
+        <div class="font-semibold">My Customer Churn Story</div>
+        <div class="text-xs text-gray-500">Data-driven retention playbook</div>
+      </div>
+    </div>
+
+    <!-- Hamburger button (mobile only) -->
+    <button id="menu-btn" class="md:hidden text-gray-700 focus:outline-none text-2xl">
+      ☰
+    </button>
+
+    <!-- Links -->
+    <div id="menu" 
+         class="hidden absolute top-full left-0 w-full flex-col bg-white rounded-lg shadow-md md:static md:flex md:flex-row md:items-center md:gap-4 md:w-auto md:bg-transparent md:shadow-none">
+      <a href="#home" class="block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded">Home</a>
+      <a href="#exec" class="block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded">Summary</a>
+      <a href="#visuals" class="block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded">Visuals</a>
+      <a href="#recommendations" class="block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded">Recommendations</a>
+      <a href="#contact" class="block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded">Connect</a>
+    </div>
+  </div>
+</nav>
+
+<script>
+  const menuBtn = document.getElementById("menu-btn");
+  const menu = document.getElementById("menu");
+  const links = menu.querySelectorAll("a");
+
+  // Toggle menu visibility
+  menuBtn.addEventListener("click", () => {
+    menu.classList.toggle("hidden");
+  });
+
+  // Auto-close menu when a link is clicked
+  links.forEach(link => {
+    link.addEventListener("click", () => {
+      if (!menu.classList.contains("hidden")) {
+        menu.classList.add("hidden");
+      }
+    });
+  });
+</script>
+
+
+
+
+  <header class="container mx-auto px-6 py-16">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+      <div class="fade-in" id="hero-left">
+        <h1 class="text-3xl sm:text-4xl font-extrabold leading-tight">Why customers leave — and how we keep them</h1>
+        <p class="mt-4 text-gray-600">This is my actionable, visual write-up of a Customer Churn Prediction analysis — model metrics, top drivers, and a playbook for retention.</p>
+
+        <div class="mt-6 grid grid-cols-2 gap-4">
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <div class="text-xs text-gray-500">Accuracy</div>
+            <div class="mt-1 text-lg font-semibold">80.7%</div>
+          </div>
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <div class="text-xs text-gray-500">F1-score</div>
+            <div class="mt-1 text-lg font-semibold">0.61</div>
+          </div>
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <div class="text-xs text-gray-500">Precision</div>
+            <div class="mt-1 text-lg font-semibold">0.66</div>
+          </div>
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <div class="text-xs text-gray-500">Recall</div>
+            <div class="mt-1 text-lg font-semibold">0.56</div>
+          </div>
+        </div>
+
+        <div class="mt-6 flex gap-3">
+          <a href="Telco_Customer_Churn_Dataset.rar" 
+	download	  
+		  class="inline-flex items-center px-4 py-2 rounded bg-indigo-600 text-white shadow">Download dataset</a>
+          <a href="Customer_Churn_Prediction.rar"
+   download
+   class="inline-flex items-center px-4 py-2 rounded border border-indigo-600 text-indigo-600">
+   Python Notebook 
+</a>
+        </div>
+      </div>
+
+      <figure class="bg-white rounded-2xl p-4 shadow-sm fade-in" id="hero-right">
+        <img src="ROC_curve.png" alt="ROC and performance" class="w-full h-64 object-contain rounded" />
+        <figcaption class="mt-2 text-xs text-gray-500">Figure: Model ROC / performance (sourced from notebook)</figcaption>
+      </figure>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-6 pb-24">
+    <section class="bg-white rounded-2xl p-6 shadow-sm fade-in" id="exec">
+      <h2 class="text-xl font-semibold">My summary</h2>
+      <p class="mt-3 text-gray-600 text-justify">
+“My model does a solid job — it gets the story right about 8 out of 10 times. When it says a customer is at risk of leaving, it’s usually correct. The clearest pattern? Customers who are new, on month-to-month contracts, and paying higher bills are the most likely to walk away.”
+	  </p>
+    </section>
+
+    <section class="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div class="col-span-2 bg-white rounded-2xl p-6 shadow-sm fade-in">
+        <h3 class="text-lg font-semibold">Key drivers (what the model learned)</h3>
+        <ul class="mt-4 space-y-3 text-gray-600">
+          <li class="flex gap-3 items-start"><span class="w-3 h-3 rounded-full bg-indigo-500 mt-2"></span><div><strong>Tenure:</strong> First 3–6 months show highest churn risk.</div></li>
+          <li class="flex gap-3 items-start"><span class="w-3 h-3 rounded-full bg-indigo-500 mt-2"></span><div><strong>Contract type:</strong> Month-to-month customers are most at-risk.</div></li>
+          <li class="flex gap-3 items-start"><span class="w-3 h-3 rounded-full bg-indigo-500 mt-2"></span><div><strong>Monthly charges:</strong> High bills and sudden bill shocks increase churn probability.</div></li>
+          <li class="flex gap-3 items-start"><span class="w-3 h-3 rounded-full bg-indigo-500 mt-2"></span><div><strong>Support & bundles:</strong> Add-on services and support plans increase stickiness.</div></li>
+        </ul>
+      </div>
+
+<aside class="bg-white rounded-2xl p-6 shadow-sm fade-in">
+  <h4 class="font-semibold">Quick Wins</h4>
+  <ul class="mt-3 list-disc ml-5 text-gray-600 space-y-2">
+    <li><strong>Welcome with care:</strong> Make the first 6 months feel special through calls, guides, or surprise check-ins.</li>
+    <li><strong>Reward commitment:</strong> Offer small but meaningful perks to customers who switch from month-to-month to annual plans.</li>
+    <li><strong>Avoid bill shocks:</strong> Proactively warn customers about upcoming changes and suggest smoother billing options.</li>
+    <li><strong>Save list in action:</strong> Each week, flag your most at-risk customers and reach out before they leave.</li>
+  </ul>
+</aside>
+
+    </section>
+
+ 
+          
+  <div class="  ">   
+  
+  </div>
+
+<section id="visuals" class="py-16 bg-gray-50">
+  <div class="container mx-auto px-6">
+    <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Visuals & Insights</h2>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Figure 1 -->
+      <figure class="bg-white p-4 rounded shadow cursor-pointer transition transform hover:scale-105">
+        <img src="churn_distribution.png" alt="chart 1" class="w-full h-40 object-contain" onclick="openModal(this.src)" />
+        <figcaption class="mt-3 text-sm text-gray-700">
+          <strong>Class Distribution:</strong> Most customers stay, but the ones who leave tell a powerful story. Spotting that minority is where real value lies.
+        </figcaption>
+      </figure>
+
+      <!-- Figure 2 -->
+      <figure class="bg-white p-4 rounded shadow cursor-pointer transition transform hover:scale-105">
+        <img src="ROC_curve.png" alt="chart 2" class="w-full h-40 object-contain" onclick="openModal(this.src)" />
+        <figcaption class="mt-3 text-sm text-gray-700">
+          <strong>Model Accuracy:</strong> The model gets it right about 8 out of 10 times. When it flags a customer at risk, it’s usually correct — strong enough to guide real-world saves.
+        </figcaption>
+      </figure>
+
+      <!-- Figure 3 -->
+      <figure class="bg-white p-4 rounded shadow cursor-pointer transition transform hover:scale-105">
+        <img src="important_features.png" alt="chart 3" class="w-full h-40 object-contain" onclick="openModal(this.src)" />
+        <figcaption class="mt-3 text-sm text-gray-700">
+          <strong>Key Drivers:</strong> Tenure and contract type lead the pack. Simply put: how long you’ve been around and whether you’re tied to a plan matter more than anything else.
+        </figcaption>
+      </figure>
+
+      <!-- Figure 4 -->
+      <figure class="bg-white p-4 rounded shadow cursor-pointer transition transform hover:scale-105">
+        <img src="churn_by_tenure.png" alt="chart 4" class="w-full h-40 object-contain" onclick="openModal(this.src)" />
+        <figcaption class="mt-3 text-sm text-gray-700">
+          <strong>Patterns of Risk:</strong> Customers in their first few months, paying higher bills, are the most likely to leave. The longer they stay — and the more stable the pricing — the stronger the loyalty.
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- Modal for enlarged charts -->
+<div id="imgModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center hidden z-50">
+  <span class="absolute top-5 right-8 text-white text-3xl cursor-pointer" onclick="closeModal()">&times;</span>
+  <img id="modalImg" class="max-h-[90vh] max-w-[90vw] rounded shadow-lg"/>
+</div>
+
+<script>
+function openModal(src) {
+  document.getElementById("modalImg").src = src;
+  document.getElementById("imgModal").classList.remove("hidden");
+}
+function closeModal() {
+  document.getElementById("imgModal").classList.add("hidden");
+}
+</script>
+
+<!-- Modal -->
+<div id="imgModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center hidden z-50">
+  <span class="absolute top-5 right-8 text-white text-3xl cursor-pointer" onclick="closeModal()">&times;</span>
+  <img id="modalImg" class="max-h-[90vh] max-w-[90vw] rounded shadow-lg"/>
+</div>
+
+<script>
+function openModal(src) {
+  document.getElementById("modalImg").src = src;
+  document.getElementById("imgModal").classList.remove("hidden");
+}
+function closeModal() {
+  document.getElementById("imgModal").classList.add("hidden");
+}
+</script>
+
+
+      
+    </section>
+	
+
+    <section id="recommendations" class="mt-10 bg-white rounded-2xl p-6 shadow-sm fade-in">
+      <h2 class="text-lg text-center font-semibold">Recommendations</h2>
+
+      <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="bg-gradient-to-br from-white to-gray-50 border border-gray-100 p-4 rounded-lg shadow-sm">
+          <h5 class="font-semibold"> 1. Onboarding: Making the First Months Count</h5>
+          <p class="mt-2 text-gray-600 text-sm text-justify">
+		  The first months decide everything. A simple check-in, a quick bill walkthrough, or a welcome guide can turn new customers into long-term ones.</p>
+        </div>
+        <div class="bg-gradient-to-br from-white to-gray-50 border border-gray-100 p-4 rounded-lg shadow-sm">
+          <h5 class="font-semibold">2. Contract nudges: Reward Commitment</h5>
+          <p class="mt-2 text-gray-600 text-sm text-justify">Month-to-month customers leave easily. Offer gentle perks — like bonus data or a free upgrade — to encourage them to stay longer.</p>
+        </div>
+        <div class="bg-gradient-to-br from-white to-gray-50 border border-gray-100 p-4 rounded-lg shadow-sm">
+          <h5 class="font-semibold">3. Billing Fixes: No More Surprises</h5>
+          <p class="mt-2 text-gray-600 text-sm text-justify">Unexpected bills drive people away. Spot changes early and give clear options so customers feel in control and cared for.</p>
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <h4 class="font-semibold">Operationalize: Making the Model Work for You</h4>
+        <p class="text-gray-600 mt-2"> 
+Every week, the model spots the customers most likely to leave. The team then reaches out, tests what works best, and feeds the results back in. Over time, it learns, improves, and keeps more customers happy.</p>
+      </div>
+    </section>
+
+
+
+<section id="contact" class="mt-10 bg-white rounded-2xl p-6 shadow-sm fade-in">
+  <h3 class="text-lg font-semibold">Want to connect?</h3>
+  <p class="mt-3 text-gray-600 text-justify">
+    I can help you <strong>understand, break down, and analyse data</strong>. 
+    Whether it’s exploring trends, telling a story with data, or building predictive models, 
+    I can help you turn raw information into clear insights and actionable decisions.
+  </p>
+
+  <div class="mt-4 flex gap-3">
+    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=georgezirra@gmail.com" target="_blank"
+       class="inline-flex items-center px-4 py-2 rounded bg-indigo-600 text-white shadow hover:brightness-105">
+       📧 Email Me
+    </a>
+    <a href="https://www.linkedin.com/in/george-vahyella-zirra-44035a126"" target="_blank"
+       class="inline-flex items-center px-4 py-2 rounded border border-indigo-600 text-indigo-600 hover:bg-indigo-50">
+       💼 Connect on LinkedIn
+    </a>
+  </div>
+</section>
+  </main>
+
+
+
+
+<footer class="bg-indigo-600 text-white items-center rounded shadow-sm text-sm hover:brightness-105 py-6">
+  <div class="container mx-auto px-6 text-sm text-center text-gray-300">© 2025 — George Vahyella Zirra • Built with Tailwind</div>
+</footer>
+
+  <script>
+    // Reveal-on-scroll for simple fade-in effect
+    function reveal() {
+      document.querySelectorAll('.fade-in').forEach(function(el) {
+        var rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 60) {
+          el.classList.add('visible');
+        }
+      });
+    }
+    window.addEventListener('scroll', reveal);
+    window.addEventListener('load', function(){ reveal(); });
+
+    // Smooth scroll for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(function(a){
+      a.addEventListener('click', function(e){
+        e.preventDefault();
+        var el = document.querySelector(this.getAttribute('href'));
+        if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    });
+  </script>
+</body>
+</html>
